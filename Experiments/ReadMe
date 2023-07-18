@@ -9,6 +9,8 @@ experiments:
   26 positions at CPR binding sites [-74:-49]. The data is stored in a numpy array.
 - theta230718ex2: the same as theta230718ex1 but with extra penalty on loss function
   depending on how far it is away from bin 5 (reference sequences).
+- theta230718ex3: the same as theta230718ex1 but without rescaling the data
+  before training the model.
 
 figures:
 - blue curve: surrogate loss
