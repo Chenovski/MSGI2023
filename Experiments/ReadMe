@@ -11,6 +11,8 @@ experiments:
   depending on how far it is away from bin 5 (reference sequences).
 - theta230718ex3: the same as theta230718ex1 but without rescaling the data
   before training the model.
+- theta230718ex4: the same as theta230718ex3 but with extra penalty on loss function
+  depending on how far it is away from bin 5 (reference sequences).
 
 figures:
 - blue curve: surrogate loss
