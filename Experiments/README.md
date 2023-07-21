@@ -13,6 +13,9 @@
   before training the model.
 - theta230718ex4: the same as theta230718ex3 but with extra penalty on loss function
   depending on how far it is away from bin 5 (reference sequences).
+- theta230719 (crp and rnap): classic NLL loss.
+- theta230720 (crp and rnap): same as 230719 but with zero intercept in the linear
+  combination of energies from each site, which means the total binding energy.
 
 **figures**:
 - blue curve: surrogate loss
