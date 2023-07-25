@@ -16,6 +16,7 @@
 - theta230719 (crp and rnap): classic NLL loss.
 - theta230720 (crp and rnap): same as 230719 but with zero intercept in the linear
   combination of energies from each site, which means the total binding energy.
+- theta230724hinge (crp and rnap): same as 230719 but using hinge loss instead of logistic
 
 **figures**:
 - blue curve: surrogate loss
