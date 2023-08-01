@@ -54,7 +54,7 @@ class jointClassifier:
     return Y                        # NOTE: returns as numpy, not torch! (b/c classes is a nparray)
                                     # (This is necessary for mltools plot to work)
 
-  def train(self,X,Y,initStep=1.,stopTol=1e-4,stopEpochs=5000,alpha=0):
+  def train(self,X,Y,initStep=1.,stopTol=1e-4,stopEpochs=5000,alpha=0,plotOpt=True):
     """ Train the logistic regression using stochastic gradient descent """
     
     M,N = X.shape;                     # initialize the model if necessary:
@@ -111,13 +111,22 @@ class jointClassifier:
         epoch += 1
 
         J01.append( self.err(X,Y) )  # evaluate the current actual error rate 
-
-        display.clear_output(wait=True); plt.figure(figsize=(15,5));
-        plt.subplot(1,2,1); 
-        plt.cla(); plt.plot(Jnll,'b-'); plt.xlabel('epoch'); plt.ylabel('surrogate loss');    # plot losses
-        plt.subplot(1,2,2); 
-        plt.cla(); plt.plot(J01,'r-'); plt.xlabel('epoch'); plt.ylabel('error rate');    # plot error rate
-        plt.show(); plt.pause(.001);                    # let OS draw the plot
+        
+        if plotOpt:
+            display.clear_output(wait=True); 
+            plt.figure(figsize=(15,5));
+            plt.subplot(1,2,1); 
+            plt.cla(); 
+            plt.plot(Jnll,'b-'); 
+            plt.xlabel('epoch'); 
+            plt.ylabel('surrogate loss');    # plot losses
+            plt.subplot(1,2,2); 
+            plt.cla(); 
+            plt.plot(J01,'r-'); 
+            plt.xlabel('epoch'); 
+            plt.ylabel('error rate');    # plot error rate
+            plt.show(); 
+            plt.pause(.001);                    # let OS draw the plot
 
         ## For debugging: you may want to print current parameters & losses
         # print(self.theta, ' => ', Jnll, ' / ', J01[-1] )

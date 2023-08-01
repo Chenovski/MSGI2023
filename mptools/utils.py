@@ -125,6 +125,32 @@ def energyMatrix(theta_raw, plot = False):
         plt.style.use('classic')
         plt.show()
     return theta, theta_long, theta_shift, theta_scale
+    
+
+
+def bootstrapData(X, Y=None, n_boot=None):
+    """
+    Bootstrap resample a data set (with replacement): 
+    draw data points (x_i,y_i) from (X,Y) n_boot times.
+
+    Parameters
+    ----------
+    X : MxN numpy array of data points to be resampled.
+    Y : Mx1 numpy array of labels associated with each datum (optional)
+    n_boot : int, number of samples to draw (default: M)
+
+    Returns
+    -------
+    Xboot, Yboot : (tuple of) numpy arrays for the resampled data set
+    If Y is not present or None, returns only Xboot (non-tuple)
+    """
+    nx,dx = twod(X).shape
+    if n_boot is None: n_boot = nx
+    idx = np.floor(np.random.rand(n_boot) * nx).astype(int)
+    if Y is None: return X[idx,:]
+    Y = Y.flatten()
+    assert nx == len(Y), 'bootstrapData: X and Y should have the same length'
+    return (X[idx,:],Y[idx])
 
 ################################################################################
 ################################################################################
