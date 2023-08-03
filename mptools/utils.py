@@ -6,7 +6,7 @@ import numpy as np
 from numpy import asarray as arr
 from numpy import atleast_2d as twod
 import matplotlib.pyplot as plt
-
+import pickle
 
 def bp2bi(sq):
     """
@@ -151,6 +151,61 @@ def bootstrapData(X, Y=None, n_boot=None):
     Y = Y.flatten()
     assert nx == len(Y), 'bootstrapData: X and Y should have the same length'
     return (X[idx,:],Y[idx])
+
+
+
+def combTheta(pklName,startIdx=0,endIdx=0,saveTheta=False,saveName='theta'):
+    """
+    Combine multiple inferred theta (vertically) generated from parallel computing.
+    datapoints contain nan will be dropped.
+    
+    Parameters
+    ----------
+    pklName : repository, file location + file name, in string type.
+    startIdx : starting index label of the pickle variable, included (default: 0).
+    endIdx : ending index label of the pickle variable, included (default: 0).
+    saveTheta : save this combined theta as a new pickle file (optional).
+    saveName : if save, the name of the pickle file (optional, default: theta).
+    
+    Returns
+    -------
+    Theta : combined theta, in numpy array type.
+    """
+    pickle_in = open(pklName+str(startIdx)+'.pkl',"rb")
+    Theta = pickle.load(pickle_in)
+    Theta = Theta[~np.isnan(Theta).any(axis=1)]
+    for i in range(startIdx+1,endIdx+1):
+        pickle_in = open(pklName+str(i)+'.pkl',"rb")
+        Theta_temp = pickle.load(pickle_in)
+        Theta = np.vstack((Theta,Theta_temp[~np.isnan(Theta_temp).any(axis=1)]))
+    if saveTheta:
+        pickle_out = open(saveName+'.pkl',"wb")
+        pickle.dump(Theta, pickle_out)
+        pickle_out.close()
+    return Theta
+
+
+
+def empiricalRule(Theta,pct=.68):
+    """
+    Applied empirical rule on the data for analysis.
+    
+    Parameters
+    ----------
+    Theta : MxN numpy array of combined theta values.
+    pct : percentage in the middle that will be preserved, range from 0 to 1.
+    
+    Returns
+    -------
+    Theta : truncated and sorted theta.
+    mean, standard deviation, minimal value, maximal value.
+    """
+    n = Theta.shape[0]
+    tileLow = (1-pct)/2
+    tileHigh = 1-tileLow
+    Theta.sort(axis=0)
+    Theta = Theta[round(tileLow*n):round(tileHigh*n)]
+    return Theta, np.mean(Theta,axis=0), np.std(Theta,axis=0), Theta[0], Theta[-1]
 
 ################################################################################
 ################################################################################
