@@ -19,7 +19,8 @@
 - theta230724hinge (crp and rnap): same as 230719 but using hinge loss instead of logistic
 - theta230726trm276param: model infers all parameters
 - theta230727 (crp and rnap): same as 230719 but label revised, energy matrix function updated.
-- theta203727joint272param: model infers all parameters (272 in total)
+- theta230727joint272param: model infers all parameters (272 in total)
+- theta230802joint272param: model infers all parameters (272 in total), new generated
 
 **figures**:
 - blue curve: surrogate loss
