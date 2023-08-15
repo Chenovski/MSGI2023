@@ -120,9 +120,9 @@ def energyMatrix(theta_raw, plot = False):
     theta = theta/theta_scale
     theta_long = np.reshape(np.transpose(theta),theta_raw.shape)
     if plot:
+        plt.style.use('classic')
         plt.matshow(theta)
         plt.colorbar(label='arbitrary unit')
-        plt.style.use('classic')
         plt.show()
     return theta, theta_long, theta_shift, theta_scale
     
